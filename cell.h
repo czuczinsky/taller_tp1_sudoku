@@ -2,8 +2,8 @@
 #define __CELL_H__
 
 typedef struct {
-    int value;
-    int reset_value;
+    char value;
+    char reset_value;
 } cell_t;
 
 void cell_init(cell_t *self, int value);
