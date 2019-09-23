@@ -2,11 +2,11 @@
 #include "socket.h"
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h> // bool
-#include <errno.h> //erno
-#include <sys/socket.h> // socket(), connect()
-#include <unistd.h> // close()
-#include <netdb.h> // getaddrinfo
+#include <stdbool.h>
+#include <errno.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netdb.h>
 
 void socket_create(socket_t* self) {
     self->fd = -1;
@@ -97,8 +97,8 @@ int socket_bind_and_listen(socket_t *self, const char *service) {
 }
 
 int socket_accept(socket_t *self, socket_t *new_socket) {
-    self->fd = accept(self->fd, NULL, NULL);
-    if (self->fd==-1) {
+    new_socket->fd = accept(self->fd, NULL, NULL);
+    if (new_socket->fd == -1) {
         perror("ACCEPT: ");
         return -1;
     }

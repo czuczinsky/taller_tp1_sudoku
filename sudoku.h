@@ -8,7 +8,7 @@ typedef struct{
 
 void sudoku_create(sudoku_t *self);
 
-void sudoku_put(sudoku_t *self, int value, int row, int column);
+int sudoku_put(sudoku_t *self, int value, int row, int column);
 
 int sudoku_verify(sudoku_t *self);
 

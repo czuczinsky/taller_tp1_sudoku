@@ -11,7 +11,7 @@ void sudoku_create(sudoku_t *self) {
 }
 
 int sudoku_fill_board(sudoku_t *self) {
-    FILE* board_file = fopen("gboard.txt", "r");
+    FILE* board_file = fopen("board.txt", "r");
     if (board_file == NULL){
         printf("El archivo no existe");
         return -1;
@@ -29,9 +29,9 @@ int sudoku_fill_board(sudoku_t *self) {
     return 0;
 }
 
-void sudoku_put(sudoku_t* self, int value, int row, int column) {
+int sudoku_put(sudoku_t* self, int value, int row, int column) {
     int cell_index = ((row - 1)*9+(column-1));
-    cell_put(&self->board[cell_index],value);
+    return (cell_put(&self->board[cell_index],value));
 }
 
 void sudoku_reset(sudoku_t *self){

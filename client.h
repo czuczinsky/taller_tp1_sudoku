@@ -1,6 +1,7 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 #include "socket.h"
+#include <stdbool.h>
 
 typedef struct{
     socket_t socket;
@@ -22,5 +23,9 @@ void __client_verify(client_t *self);
 void __client_reset(client_t *self);
 
 void __client_put(client_t *self, char *input);
+
+bool __client_value_in_range(int value, int min, int max);
+
+bool __client_no_mod_cell(client_t *self);
 
 #endif

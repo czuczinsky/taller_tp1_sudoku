@@ -4,11 +4,12 @@
 typedef struct {
     char value;
     char reset_value;
+    char modifiable;
 } cell_t;
 
 void cell_init(cell_t *self, int value);
 
-void cell_put(cell_t *self, int value);
+int cell_put(cell_t *self, int value);
 
 int cell_get(cell_t *self);
 
