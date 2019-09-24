@@ -36,9 +36,7 @@ void client_handle(client_t *self){
 void __client_command(client_t *self, char *cmd, int len_cmd) {
     uint32_t len_buff;
     socket_send(&self->socket, cmd, len_cmd);
-    // Los primero 4 bytes son el largo del msj a recibir
     socket_recv(&self->socket, (char *) &len_buff, 4);
-    // Reconfiguro a los endianes del sys
     len_buff = ntohl(len_buff);
     socket_recv(&self->socket, self->buffer, len_buff);
     self->buffer[len_buff]=0;
@@ -51,13 +49,7 @@ void __client_get(client_t *self) {
 
 void __client_verify(client_t *self) {
     __client_command(self, "V", 1);
-    if (strncmp(self->buffer, "Ok\n", 3) == 0) {
-        printf("%s\n", self->buffer);
-    } else {
-        char msgErr[] = 
-            "ERROR\n";
-        fprintf(stderr, "%s", msgErr);
-    }
+    printf("%s", self->buffer);
 }
 
 void __client_reset(client_t *self) {
@@ -95,7 +87,7 @@ void __client_put(client_t *self, char *input) {
         }
     } else {
         char msgErr[] = 
-            "Error en los indices. Rango soportado: [1,9]\n";
+            "Error en los índices. Rango soportado: [1,9]\n";
         fprintf(stderr, "%s", msgErr);
     }
 }

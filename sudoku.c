@@ -88,14 +88,13 @@ int sudoku_verify(sudoku_t *self) {
 }
 
 int sudoku_rows_verify(sudoku_t *self) {
-    for (int row_index = 0; row_index < 9; row_index++) {
-        for (int column_index_1 = 0; column_index_1 < 8; column_index_1++) {
-            int cell_index_1 = ((row_index*9)+column_index_1);
-            for (int column_index_2 = column_index_1 + 1;
-                 column_index_2 < 9; column_index_2++) {
-                int cell_index_2 = ((row_index*9)+column_index_2);
-                if (self->board[cell_index_1].value
-                    == self->board[cell_index_2].value) {
+    for (int ri = 0; ri < 9; ri++) {
+        for (int ci1 = 0; ci1 < 8; ci1++) {
+            int cell1 = ((ri*9)+ci1);
+            for (int ci2 = ci1 + 1; ci2 < 9; ci2++) {
+                int cell2 = ((ri*9)+ci2);
+                if (self->board[cell1].value != 48
+                    && self->board[cell1].value == self->board[cell2].value) {
                     return -1;
                 }
             }
@@ -111,7 +110,8 @@ int sudoku_columns_verify(sudoku_t *self) {
             for (int row_index_2 = row_index_1 + 1;
                  row_index_2 < 9; row_index_2++) {
                 int cell_index_2 = ((row_index_2*9)+column_index);
-                if (self->board[cell_index_1].value
+                if (self->board[cell_index_1].value != 48
+                    && self->board[cell_index_1].value
                     == self->board[cell_index_2].value) {
                     return -1;
                 }
@@ -122,22 +122,20 @@ int sudoku_columns_verify(sudoku_t *self) {
 }
 
 int sudoku_regions_verify(sudoku_t *self) {
-    for (int row_offset = 0; row_offset < 9; row_offset = row_offset + 3) {
-        for (int column_offset = 0;
-             column_offset < 9; column_offset = column_offset + 3) {
-            for (int row_index = 0; row_index < 3; row_index++) {
-                for (int column_index_1 = 0; 
-                    column_index_1 < 3; column_index_1++) {
-                    int cell_index_1 = (((row_index+row_offset)*9) +
-                                            (column_index_1 + column_offset));
-                    for (int column_index_2 = 0; 
-                        column_index_2 < 3; column_index_2++) {
-                        int cell_index_2 = (((row_index+row_offset)*9) + 
-                                            (column_index_2+column_offset));
-                        if (cell_index_1 != cell_index_2 && 
-                            self->board[cell_index_1].value == 
-                            self->board[cell_index_2].value) {
-                            return -1;
+    for (int orow = 0; orow < 9; orow+=3) {
+        for (int ocol = 0; ocol < 9; ocol+=3) {
+            for (int row1 = orow; row1 < 3+orow; row1++) {
+                for (int col1 = ocol; col1 < 3+ocol; col1++) {
+                    int icell1 = (row1 * 9) + col1;
+                    for (int row2 = orow; row2 < 3+orow; row2++) {
+                        for (int col2 = ocol; col2 < 3+ocol; col2++) {
+                            int icell2 = (row2 * 9) + col2;
+                            if (icell1 != icell2
+                                && self->board[icell1].value != 48
+                                && self->board[icell1].value == 
+                                self->board[icell2].value) {
+                                return -1;
+                            }
                         }
                     }
                 }

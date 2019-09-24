@@ -58,11 +58,11 @@ int __server_put(server_t *self) {
 void __server_verify(server_t *self) {
     int msg_length;
     if (sudoku_verify(&self->sudoku) == 0){
-        msg_length = 2;
-        __server_send_msg(self, msg_length, "Ok");
+        msg_length = 3;
+        __server_send_msg(self, msg_length, "OK\n");
     } else {
-        msg_length = 5;
-        __server_send_msg(self, msg_length, "Error");
+        msg_length = 6;
+        __server_send_msg(self, msg_length, "ERROR\n");
     }
 }
 
